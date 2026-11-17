@@ -1,0 +1,434 @@
+:root {
+  font-family: "Segoe UI", sans-serif;
+  color: #e9edf4;
+  background: #20242b;
+  font-synthesis: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #app {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+}
+
+button {
+  font: inherit;
+}
+
+.office {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: #20242b;
+}
+
+.titlebar {
+  height: 32px;
+  min-height: 32px;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  background: transparent;
+  user-select: none;
+  z-index: 20;
+}
+
+.drag-area {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 12px;
+  cursor: move;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #c7d1de;
+}
+
+.handle {
+  font-size: 20px;
+  color: #83a7d6;
+}
+
+.version {
+  font-size: 10px;
+  color: #778498;
+}
+
+.controls {
+  display: flex;
+}
+
+.controls button {
+  width: 40px;
+  border: none;
+  background: transparent;
+  color: #c7d1de;
+  font-size: 19px;
+  cursor: pointer;
+}
+
+.controls button:hover {
+  background: #ffffff18;
+}
+
+#close:hover {
+  background: #c03945;
+  color: white;
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) minmax(500px, 4fr);
+  flex: 1;
+  min-height: 0;
+  padding: 8px;
+  gap: 8px;
+}
+
+.panel {
+  border: 1px solid #465266;
+  background: #29313d;
+  padding: 12px;
+  min-width: 0;
+  overflow: auto;
+}
+
+.panel-title {
+  font-size: 11px;
+  font-weight: bold;
+  color: #91b9ed;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.task-card {
+  border: 1px solid #506078;
+  background: #1f2732;
+  color: #dce5f0;
+  padding: 10px;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.task-text {
+  line-height: 1.35;
+}
+
+.task-remove {
+  align-self: flex-start;
+  border: none;
+  background: #7a3340;
+  color: white;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.world-wrap {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+}
+
+.world {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: #26372f;
+  border: 2px solid #4e6959;
+}
+
+.world canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: #00000088;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 30;
+  padding: 18px;
+}
+
+.overlay.hidden {
+  display: none;
+}
+
+.overlay-card {
+  width: min(430px, 100%);
+  background: #1c2430;
+  border: 1px solid #59708c;
+  box-shadow: 0 10px 26px #00000055;
+  color: #e6edf6;
+}
+
+.overlay-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-bottom: 1px solid #394b62;
+}
+
+.overlay-title {
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.overlay-close {
+  border: none;
+  background: transparent;
+  color: #d6deea;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.overlay-body {
+  padding: 12px;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.overlay-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 12px;
+  border-top: 1px solid #394b62;
+}
+
+.overlay-action {
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.overlay-action.primary {
+  background: #3e6fb3;
+  color: white;
+}
+
+.overlay-action.danger {
+  background: #8c3942;
+  color: white;
+}
+
+.overlay-action.neutral {
+  background: #3d4654;
+  color: white;
+}
+
+.request-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.request-message {
+  padding: 10px;
+  background: #111822;
+  border: 1px solid #394b62;
+  min-height: 70px;
+  white-space: pre-wrap;
+}
+
+.resize-handle {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 22px;
+  height: 22px;
+  cursor: nwse-resize;
+  z-index: 40;
+  background: linear-gradient(
+    135deg,
+    transparent 65%,
+    #8da3bc 66%,
+    #8da3bc 72%,
+    transparent 73%
+  );
+}
+
+/* Disposition de la v0.3 : tâches à gauche, monde à droite */
+.office { width: 100%; height: 100vh; }
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(160px, 20%) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  gap: 8px;
+  padding: 8px;
+}
+.pinned-tasks { grid-column: 1; grid-row: 1; min-width: 0; min-height: 0; }
+.world-wrap { grid-column: 2; grid-row: 1; min-width: 0; min-height: 0; width: 100%; height: 100%; overflow: hidden; }
+.world { width: 100%; height: 100%; }
+.world canvas { display: block; }
+
+/* v0.4.0 — Local mailbox, paper forms and LAN configuration */
+.network-indicator {
+  width: auto !important;
+  min-width: 105px;
+  padding: 0 9px;
+  color: #d9a56b !important;
+  font-size: 11px !important;
+}
+.network-indicator.online { color: #87cf99 !important; }
+.side-action {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  padding: 9px;
+  border: 1px solid #52647e;
+  background: #364555;
+  color: #e9edf4;
+  text-align: left;
+  cursor: pointer;
+  font-size: 12px;
+}
+.side-action:hover { background: #455b73; }
+.overlay { overflow-y: auto; }
+.overlay-card {
+  width: min(640px, 100%);
+  max-height: min(92%, 740px);
+  overflow-y: auto;
+}
+.overlay-title { font-size: 14px; }
+.compose-form, .network-pane {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.compose-form label, .network-pane label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  color: #c8d7ee;
+  font-size: 12px;
+  font-weight: 600;
+}
+.compose-form input, .compose-form textarea,
+.network-pane input {
+  width: 100%;
+  padding: 9px 10px;
+  background: #101b27;
+  border: 1px solid #536984;
+  color: #edf3f9;
+  font: inherit;
+  font-size: 13px;
+}
+.compose-form textarea { resize: vertical; min-height: 95px; }
+.compose-form input:focus, .compose-form textarea:focus, .network-pane input:focus {
+  outline: 1px solid #7fafe5;
+}
+.notice { font-size: 11px; color: #c5cbd3; line-height: 1.5; }
+.form-error { color: #ff9797; font-size: 12px; white-space: pre-wrap; }
+.submit-button {
+  border: 0;
+  background: #3e7da1;
+  color: white;
+  padding: 11px 15px;
+  cursor: pointer;
+  font-weight: 700;
+}
+.submit-button:disabled { opacity: 0.5; cursor: wait; }
+.sheet {
+  border: 2px solid #b8a782;
+  background: #f5edda;
+  color: #2f2a24;
+  padding: 18px;
+  font-family: Georgia, serif;
+  font-size: 14px;
+}
+.sheet-heading { font: bold 11px monospace; letter-spacing: 1px; color: #756c57; border-bottom: 1px solid #c8baa3; padding-bottom: 8px; }
+.sheet-meta { padding-top: 9px; font-size: 12px; }
+.sheet-subject { font-size: 19px; font-weight: bold; margin-top: 18px; }
+.sheet-message { white-space: pre-wrap; overflow-wrap: anywhere; min-height: 65px; margin: 16px 0; line-height: 1.6; }
+.sheet .notice { color: #805c36; }
+.attachments { border-top: 1px solid #c8baa3; padding-top: 10px; font-size: 12px; }
+.attachment-button {
+  display: block;
+  padding: 5px 8px;
+  margin: 5px 0;
+  background: #d5e0e5;
+  color: #243c52;
+  border: 1px solid #9aa9b0;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+.mail-list { display: flex; flex-direction: column; gap: 8px; }
+.mail-item {
+  background: #28394e;
+  border: 1px solid #566d88;
+  color: #eaf0f8;
+  text-align: left;
+  padding: 10px;
+  cursor: pointer;
+}
+.mail-item:hover { background: #344e6a; }
+.network-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+.attachment-image { display: block; max-width: min(360px, 100%); max-height: 260px; object-fit: contain; margin: 8px 0 12px; border: 1px solid #b8a782; }
+
+/* v0.4.2 : option de démarrage automatique dans ⚙ Paramètres */
+.startup-prefs {
+  border: 1px solid #526984;
+  background: #243748;
+  border-radius: 6px;
+  padding: 12px;
+}
+.startup-prefs h3 {
+  margin: 0 0 11px;
+  font-size: 13px;
+  color: #cae4ff;
+}
+.network-pane label.startup-switch {
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  line-height: 1.4;
+  font-size: 12px;
+}
+.network-pane .startup-switch input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  accent-color: #69acde;
+  cursor: pointer;
+}
+.network-pane .startup-switch input:disabled { cursor: not-allowed; }
+.startup-status {
+  color: #a7dcbb;
+  font-size: 11px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}

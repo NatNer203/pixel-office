@@ -1,0 +1,11 @@
+Pixel Office v0.4.2 — démarrage Windows et notifications PNJ
+
+- ⚙ Paramètres : option « démarrer avec Windows et afficher au premier plan ».
+- Désactivée par défaut, activable après installation de la version release Windows.
+- Utilise tauri-plugin-autostart avec le profil Windows courant.
+- Son ding.mp3 dès l'arrivée d'un PNJ au guichet ; rappel toutes les 2 minutes.
+- Quand la feuille est ouverte, la demande est marquée comme lue dans SQLite ; le coursier ne sonne plus.
+- La lecture reste mémorisée après un redémarrage.
+- Le fichier audio doit être ajouté dans public/sounds/ding.mp3.
+- Serveur LAN, mises à jour signées et désinstallateur NSIS conservés.
+- La clé publique de l'updater déjà générée localement NE DOIT PAS être remplacée.
